@@ -47,7 +47,7 @@ class ApiAuthController extends Controller
         if (!Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Invalid password'], 401);
         }
-
+        
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
             'message' => 'User logged in successfully',
@@ -58,4 +58,14 @@ class ApiAuthController extends Controller
     
  
     }
+    //++++++++++++++++++++++++++++++++++++++++++++//
+    //+++++++++++++++++++++++++++++++++++++++++++//    
+      public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ], 200);
+    }
 }
+
