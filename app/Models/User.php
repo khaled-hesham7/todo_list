@@ -50,4 +50,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function conversations()
+{
+    return $this->belongsToMany(Conversation::class, 'conversation_user')
+                ->withPivot('joined_at', 'is_admin')
+                ->withTimestamps();
+}
+
+public function messages()
+{
+    return $this->hasMany(Message::class, 'sender_id');
+}
+
+
 }
